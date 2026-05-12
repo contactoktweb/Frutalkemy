@@ -8,9 +8,14 @@ import { useCart } from "@/store/cart-store"
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null)
   const [mousePosition, setMousePosition] = useState({ x: 0.5, y: 0.5 })
+  const [isScrolled, setIsScrolled] = useState(false)
   const { totalItems, toggleCart } = useCart()
 
   useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       if (!heroRef.current) return
       const rect = heroRef.current.getBoundingClientRect()
@@ -20,8 +25,12 @@ export function Hero() {
       })
     }
 
+    window.addEventListener("scroll", handleScroll)
     window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      window.removeEventListener("mousemove", handleMouseMove)
+    }
   }, [])
 
   return (
@@ -75,8 +84,12 @@ export function Hero() {
         ))}
       </div>
 
-      {/* Header / Nav */}
-      <header className="absolute top-0 left-0 right-0 z-20 py-6 md:py-8">
+      {/* Header / Nav - Fixed on scroll */}
+      <header className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+        isScrolled 
+          ? "bg-charcoal/80 backdrop-blur-lg border-b border-white/10 py-4 shadow-xl" 
+          : "bg-transparent py-6 md:py-8"
+      }`}>
         <div className="container mx-auto px-6">
           <nav className="flex items-center justify-between" aria-label="Navegación principal">
             <div className="flex items-center gap-4">

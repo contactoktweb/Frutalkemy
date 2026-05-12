@@ -150,8 +150,7 @@ export function ShopSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isCartOpen, setIsCartOpen] = useState(false)
-  const { addItem, totalItems } = useCart()
+  const { addItem, totalItems, toggleCart } = useCart()
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -199,55 +198,38 @@ export function ShopSection() {
       description: product.process,
       weight: "250g"
     })
-    setIsCartOpen(true)
+    toggleCart()
   }
 
   return (
-    <section id="tienda" ref={sectionRef} className="bg-cream pb-20 md:pb-24 relative overflow-hidden">
-      {/* Cart Trigger Floating */}
-      <button 
-        onClick={() => setIsCartOpen(true)}
-        className="fixed bottom-8 right-8 z-50 bg-charcoal text-cream p-5 rounded-full shadow-2xl group overflow-hidden shine-effect"
-      >
-        <div className="relative">
-          <ShoppingBag className="w-6 h-6" />
-          <span className="absolute -top-2 -right-2 bg-gold text-charcoal text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
-            {totalItems()}
-          </span>
+    <section id="tienda" ref={sectionRef} className="bg-cream pb-20 md:pb-24 relative overflow-hidden pt-0">
+      {/* Visual banner strip with image - Moved to TOP to avoid spacing issues */}
+      <div className="relative w-full h-56 md:h-80 mb-[-1px] overflow-hidden">
+        <Image
+          src="/images/cafe-montana.jpg"
+          alt="Paisaje de las montañas cafeteras colombianas"
+          fill
+          className="object-cover object-center"
+          sizes="100vw"
+          priority
+        />
+        <div className="absolute inset-0 bg-charcoal/40" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <span className="font-accent italic text-cream/90 text-3xl md:text-5xl drop-shadow-lg">Directo de</span>
+            <h2 className="font-display text-cream text-4xl md:text-7xl tracking-wider drop-shadow-2xl">LAS MONTAÑAS</h2>
+          </div>
         </div>
-      </button>
+      </div>
 
-      {/* Modals & Sidebar */}
+      {/* Modals - Rendered after banner */}
       <ProductModal 
         product={selectedProduct} 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
       />
-      <CartSidebar 
-        isOpen={isCartOpen} 
-        onClose={() => setIsCartOpen(false)} 
-      />
 
-      {/* Visual banner strip with image */}
-      <div className="relative w-full h-48 md:h-64 mb-[-1px] overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200&auto=format&fit=crop"
-          alt="Paisaje de las montañas cafeteras colombianas"
-          fill
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-cream/10 via-transparent to-cream" />
-        <div className="absolute inset-0 bg-gradient-to-r from-coral/20 via-transparent to-teal/20" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <span className="font-accent italic text-cream/90 text-3xl md:text-5xl drop-shadow-lg">Directo de</span>
-            <p className="font-display text-cream text-4xl md:text-6xl tracking-wider drop-shadow-2xl">LAS MONTAÑAS</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-6 relative pt-12 z-10">
         {/* Section Title */}
         <div className="text-center mb-16 fade-in-section">
           <div className="inline-flex items-center gap-3 mb-6 bg-white/50 px-6 py-2 rounded-full border border-charcoal/5">
@@ -348,6 +330,7 @@ export function ShopSection() {
           </div>
         </div>
       </div>
+
     </section>
   )
 }
