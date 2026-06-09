@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import Image from "next/image"
 import { Camera, ArrowUpRight } from "lucide-react"
 import { motion } from "framer-motion"
@@ -55,30 +55,17 @@ export function GallerySection() {
     <section
       id="galeria"
       ref={sectionRef}
-      className="bg-charcoal py-24 md:py-32 relative overflow-hidden"
+      className="bg-white py-24 md:py-32 relative overflow-hidden"
     >
-      {/* Background accents */}
-      <div className="absolute top-0 right-0 w-1/3 h-1/2 bg-gradient-to-bl from-gold/5 to-transparent blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-1/3 h-1/2 bg-gradient-to-tr from-terracotta/5 to-transparent blur-[120px] pointer-events-none" />
-
       <div className="container mx-auto px-6">
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-          <div className="max-w-2xl">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-px bg-gold" />
-              <span className="font-body text-gold text-xs tracking-[0.4em] uppercase font-bold">Inspiración</span>
-            </div>
-            <h2 className="font-display text-5xl md:text-7xl lg:text-8xl text-cream tracking-tight leading-none mb-6">
-              NUESTRA <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-terracotta to-coral">GALERÍA</span>
-            </h2>
-          </div>
-          <div className="md:text-right">
-            <p className="font-body text-cream/50 text-lg max-w-sm ml-auto mb-8">
-              Capturando la esencia de la alquimia cafetera en cada etapa de su viaje.
-            </p>
-          </div>
+        <div className="text-center mb-16">
+          <h2 className="font-display text-4xl md:text-5xl font-black text-navy uppercase tracking-tighter mb-4">
+            NUESTRA <span className="text-lime">GALERÍA</span>
+          </h2>
+          <p className="font-body text-navy/70 text-lg md:text-xl font-medium max-w-2xl mx-auto">
+            Capturando la esencia de la alquimia cafetera en cada etapa de su viaje.
+          </p>
         </div>
 
         {/* Artistic Mosaic Grid */}
@@ -90,26 +77,26 @@ export function GallerySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
-              className={`group relative overflow-hidden rounded-sm ${item.span} ${item.aspect}`}
+              className={`group relative overflow-hidden rounded-none ${item.span} ${item.aspect} bg-navy`}
             >
               {/* Image */}
               <Image
                 src={item.src}
                 alt={item.alt}
                 fill
-                className="object-cover transition-transform duration-1000 group-hover:scale-110"
+                className="object-cover opacity-80 transition-transform duration-1000 group-hover:scale-110 group-hover:opacity-100"
               />
               
               {/* Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
               
               {/* Content Overlay */}
               <div className="absolute inset-0 p-6 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                <span className="font-body text-[10px] tracking-[0.3em] text-gold uppercase mb-2 block opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <span className="font-body text-[10px] tracking-[0.3em] text-lime uppercase mb-2 block">
                   {item.tag}
                 </span>
                 <div className="flex items-end justify-between">
-                  <h3 className="font-display text-xl md:text-2xl text-cream tracking-wide">
+                  <h3 className="font-display text-xl md:text-2xl text-white tracking-wide font-black uppercase">
                     {item.title}
                   </h3>
                   <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-500 delay-100">
@@ -117,37 +104,18 @@ export function GallerySection() {
                   </div>
                 </div>
               </div>
-
-              {/* Shine effect on hover */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             </motion.div>
           ))}
         </div>
 
-        {/* Bottom Quote & Link */}
-        <div className="mt-20 flex flex-col md:flex-row items-center justify-between gap-10 border-t border-white/5 pt-12">
-          <div className="flex items-center gap-6">
-            <div className="w-12 h-12 rounded-full border border-gold/30 flex items-center justify-center">
-              <Camera className="w-5 h-5 text-gold" />
-            </div>
-            <p className="font-accent italic text-cream/70 text-xl md:text-2xl max-w-md">
-              "La belleza está en el detalle del proceso"
-            </p>
-          </div>
-          
-          <div className="flex items-center gap-8">
-            <div className="hidden md:block text-right">
-              <span className="block font-display text-cream text-lg">FRUTALKEMY</span>
-              <span className="block font-body text-cream/30 text-[10px] tracking-[0.2em]">© {new Date().getFullYear()}</span>
-            </div>
-            <a
-              href="#tienda"
-              className="group relative overflow-hidden font-display tracking-[0.2em] text-charcoal bg-white px-12 py-5 shine-effect"
-            >
-              <span className="relative z-10 group-hover:text-white transition-colors duration-300">EXPLORAR TIENDA</span>
-              <div className="absolute inset-0 bg-gold translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-            </a>
-          </div>
+        {/* CTA Link */}
+        <div className="mt-16 text-center">
+          <a
+            href="#tienda"
+            className="inline-block bg-navy hover:bg-navy-light text-white font-display font-black text-sm tracking-widest px-10 py-4 rounded-none transition-all duration-300 transform hover:scale-105 uppercase"
+          >
+            Explorar Tienda
+          </a>
         </div>
       </div>
     </section>

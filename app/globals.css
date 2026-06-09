@@ -4,41 +4,37 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Frutalkemy Vibrant Design System */
-  --cream: #FDF8F3;
-  --charcoal: #1A1A1A;
-  --gold: #D4A853;
-  --gold-dark: #B8942F;
+  /* Forest Inspired Design System */
+  --navy: #0B1120;
+  --navy-light: #1E293B;
+  --lime: #D9E021;
+  --lime-dark: #C5CC1E;
+  /* Keep some of the fruit colors as subtle accents if needed */
   --terracotta: #C75D3A;
-  --terracotta-light: #E8886A;
   --forest: #2D5A47;
-  --forest-light: #4A8B6F;
-  --burgundy: #722F37;
-  --burgundy-light: #9B4F58;
-  --coral: #FF6B5B;
-  --teal: #3D8B8B;
-  --sand: #E8DFD0;
+  --cream: #F8F9FA;
+  --white: #FFFFFF;
   
-  --background: var(--cream);
-  --foreground: var(--charcoal);
-  --card: var(--cream);
-  --card-foreground: var(--charcoal);
-  --popover: var(--cream);
-  --popover-foreground: var(--charcoal);
-  --primary: var(--charcoal);
-  --primary-foreground: var(--cream);
-  --secondary: var(--gold);
-  --secondary-foreground: var(--charcoal);
-  --muted: var(--sand);
-  --muted-foreground: #666666;
-  --accent: var(--terracotta);
-  --accent-foreground: var(--cream);
-  --destructive: #B91C1C;
-  --destructive-foreground: var(--cream);
-  --border: var(--gold);
-  --input: var(--sand);
-  --ring: var(--gold);
-  --radius: 0.25rem;
+  --background: var(--white);
+  --foreground: var(--navy);
+  --card: var(--white);
+  --card-foreground: var(--navy);
+  --popover: var(--white);
+  --popover-foreground: var(--navy);
+  --primary: var(--navy);
+  --primary-foreground: var(--white);
+  --secondary: var(--lime);
+  --secondary-foreground: var(--navy);
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --accent: var(--lime);
+  --accent-foreground: var(--navy);
+  --destructive: #EF4444;
+  --destructive-foreground: var(--white);
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: var(--navy);
+  --radius: 0.5rem;
 }
 
 @theme inline {
@@ -46,19 +42,13 @@
   --font-accent: var(--font-playfair), 'Georgia', serif;
   --font-body: var(--font-montserrat), 'Arial', sans-serif;
   
-  --color-cream: var(--cream);
-  --color-charcoal: var(--charcoal);
-  --color-gold: var(--gold);
-  --color-gold-dark: var(--gold-dark);
+  --color-navy: var(--navy);
+  --color-navy-light: var(--navy-light);
+  --color-lime: var(--lime);
+  --color-lime-dark: var(--lime-dark);
   --color-terracotta: var(--terracotta);
-  --color-terracotta-light: var(--terracotta-light);
   --color-forest: var(--forest);
-  --color-forest-light: var(--forest-light);
-  --color-burgundy: var(--burgundy);
-  --color-burgundy-light: var(--burgundy-light);
-  --color-coral: var(--coral);
-  --color-teal: var(--teal);
-  --color-sand: var(--sand);
+  --color-cream: var(--cream);
   
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -90,7 +80,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-cream text-charcoal;
+    @apply bg-background text-foreground;
   }
   html {
     scroll-behavior: smooth;

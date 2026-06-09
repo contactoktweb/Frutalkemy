@@ -147,42 +147,9 @@ function ProductCard({
 }
 
 export function ShopSection() {
-  const sectionRef = useRef<HTMLElement>(null)
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const { addItem, totalItems, toggleCart } = useCart()
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible")
-          }
-        })
-      },
-      { threshold: 0.1 }
-    )
-
-    const elements = sectionRef.current?.querySelectorAll(".fade-in-section")
-    elements?.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [])
-
-  const scrollContainerRef = useRef<HTMLDivElement>(null)
-
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -400, behavior: 'smooth' })
-    }
-  }
-
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 400, behavior: 'smooth' })
-    }
-  }
+  const { addItem, toggleCart } = useCart()
 
   const handleViewDetails = (product: Product) => {
     setSelectedProduct(product)
@@ -202,135 +169,63 @@ export function ShopSection() {
   }
 
   return (
-    <section id="tienda" ref={sectionRef} className="bg-cream pb-20 md:pb-24 relative overflow-hidden pt-0">
-      {/* Visual banner strip with image - Moved to TOP to avoid spacing issues */}
-      <div className="relative w-full h-56 md:h-80 mb-[-1px] overflow-hidden">
-        <Image
-          src="/images/cafe-montana.jpg"
-          alt="Paisaje de las montañas cafeteras colombianas"
-          fill
-          className="object-cover object-center"
-          sizes="100vw"
-          priority
-        />
-        <div className="absolute inset-0 bg-charcoal/40" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <span className="font-accent italic text-cream/90 text-3xl md:text-5xl drop-shadow-lg">Directo de</span>
-            <h2 className="font-display text-cream text-4xl md:text-7xl tracking-wider drop-shadow-2xl">LAS MONTAÑAS</h2>
-          </div>
+    <section id="tienda" className="bg-white py-20 md:py-32">
+      <div className="container mx-auto px-6">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <h2 className="font-display text-4xl md:text-5xl font-black text-navy uppercase tracking-tighter mb-4">
+            PEDIDO EN LÍNEA: CAFÉ VERDE FRESCO DE COLOMBIA
+          </h2>
+          <p className="font-body text-navy/70 text-lg md:text-xl font-medium max-w-2xl mx-auto">
+            Elige entre nuestras variedades premium | Envíos a todo el mundo disponibles
+          </p>
+        </div>
+
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {products.map((product) => (
+            <div key={product.id} className="group cursor-pointer" onClick={() => handleViewDetails(product)}>
+              <div className="relative aspect-square mb-6 overflow-hidden bg-muted">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/10 transition-colors" />
+              </div>
+              <div className="text-center">
+                <h3 className="font-display text-lg font-black text-navy uppercase tracking-tight mb-1 group-hover:text-lime transition-colors">
+                  {product.name}
+                </h3>
+                <p className="font-body text-xs text-navy/60 uppercase tracking-widest mb-2">
+                  {product.process}
+                </p>
+                <p className="font-display text-xl font-black text-navy">
+                  {product.price}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Discover More Button */}
+        <div className="mt-16 text-center">
+          <a 
+            href="#tienda" 
+            className="inline-block bg-lime hover:bg-lime-dark text-navy font-display font-black text-sm tracking-widest px-10 py-4 rounded-none transition-all duration-300 transform hover:scale-105 uppercase"
+          >
+            Descubre más cafés en nuestra tienda
+          </a>
         </div>
       </div>
 
-      {/* Modals - Rendered after banner */}
       <ProductModal 
         product={selectedProduct} 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
       />
-
-      <div className="container mx-auto px-6 relative pt-12 z-10">
-        {/* Section Title */}
-        <div className="text-center mb-16 fade-in-section">
-          <div className="inline-flex items-center gap-3 mb-6 bg-white/50 px-6 py-2 rounded-full border border-charcoal/5">
-            <Coffee className="w-6 h-6 text-coral" />
-            <span className="font-body text-coral text-sm tracking-[0.3em] uppercase font-bold">
-              Nuestra Colección
-            </span>
-            <Coffee className="w-6 h-6 text-coral" />
-          </div>
-          <h2 className="relative inline-block">
-            <span className="font-accent italic text-teal text-3xl md:text-5xl block mb-2">
-              Taste
-            </span>
-            <span className="font-display text-6xl md:text-8xl lg:text-9xl text-charcoal tracking-wider">
-              THE EXPERIENCE
-            </span>
-          </h2>
-          <div className="flex items-center justify-center gap-4 mt-8 mb-8">
-            <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-coral to-gold" />
-            <div className="w-3 h-3 bg-coral rotate-45" />
-            <div className="w-24 h-0.5 bg-gradient-to-l from-transparent via-gold to-coral" />
-          </div>
-          <p className="font-body text-charcoal/70 text-lg max-w-xl mx-auto">
-            Descubre nuestra colección de muestras exclusivas, cada una un viaje sensorial único 
-            que cuenta la historia de nuestras montañas.
-          </p>
-        </div>
-
-        {/* Carousel controls */}
-        <div className="flex justify-end gap-4 mb-6 pr-4 fade-in-section">
-          <button 
-            onClick={scrollLeft}
-            className="w-12 h-12 rounded-full border border-charcoal/20 flex items-center justify-center text-charcoal hover:bg-gold hover:text-cream hover:border-gold transition-colors"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-          </button>
-          <button 
-            onClick={scrollRight}
-            className="w-12 h-12 rounded-full border border-charcoal/20 flex items-center justify-center text-charcoal hover:bg-coral hover:text-cream hover:border-coral transition-colors"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-          </button>
-        </div>
-
-        {/* Products Carousel */}
-        <div className="relative fade-in-section -mx-6 px-6 pb-12">
-          <div 
-            ref={scrollContainerRef}
-            className="flex gap-8 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-8"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {products.map((product, index) => (
-              <div key={product.id} className={`stagger-${index + 1} min-w-[320px] md:min-w-[400px] snap-center`}>
-                <ProductCard 
-                  product={product} 
-                  onViewDetails={handleViewDetails}
-                  onAddToCart={handleAddToCart}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Services / Feature Cards */}
-        <div className="grid md:grid-cols-3 gap-6 mt-20 fade-in-section">
-          <div className="group relative h-64 md:h-80 overflow-hidden bg-charcoal">
-            <div className="absolute inset-0 p-8 flex flex-col justify-end">
-              <div className="w-14 h-14 bg-gold/90 text-charcoal flex items-center justify-center mb-6">
-                <Truck className="w-7 h-7" />
-              </div>
-              <h3 className="font-display text-2xl text-cream tracking-wider mb-2">ENVÍO GRATIS</h3>
-              <p className="font-body text-cream/70 text-sm leading-relaxed">
-                Entregas sin costo en pedidos mayores a $50 a nivel nacional.
-              </p>
-            </div>
-          </div>
-          <div className="group relative h-64 md:h-80 overflow-hidden bg-charcoal">
-            <div className="absolute inset-0 p-8 flex flex-col justify-end">
-              <div className="w-14 h-14 bg-teal/90 text-cream flex items-center justify-center mb-6">
-                <Shield className="w-7 h-7" />
-              </div>
-              <h3 className="font-display text-2xl text-cream tracking-wider mb-2">100% ORGÁNICO</h3>
-              <p className="font-body text-cream/70 text-sm leading-relaxed">
-                Cultivado en armonía con la naturaleza, con certificación de origen.
-              </p>
-            </div>
-          </div>
-          <div className="group relative h-64 md:h-80 overflow-hidden bg-charcoal">
-            <div className="absolute inset-0 p-8 flex flex-col justify-end">
-              <div className="w-14 h-14 bg-coral/90 text-cream flex items-center justify-center mb-6">
-                <Coffee className="w-7 h-7" />
-              </div>
-              <h3 className="font-display text-2xl text-cream tracking-wider mb-2">TOSTADO FRESCO</h3>
-              <p className="font-body text-cream/70 text-sm leading-relaxed">
-                Tostado artesanalmente bajo demanda para asegurar el máximo aroma.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
     </section>
   )
 }
+

@@ -11,20 +11,14 @@ import { CartSidebar } from "@/components/landing/cart-sidebar"
 
 export default function Home() {
   return (
-    <main className="overflow-hidden">
+    <main className="overflow-hidden bg-white">
       <CartSidebar />
       <Hero />
       <ShopSection />
       
-      <GallerySection />
-      
-      {/* Wave transition to Process Section */}
-      <WaveDivider fromColor="#1A1A1A" toColor="#3D8B8B" />
       <ProcessSection />
-      
-      {/* Wave transition back to dark origin */}
-      <WaveDivider fromColor="#3D8B8B" toColor="#0D0D0D" flip={true} />
       <OriginSection />
+      <GallerySection />
       
       <Footer />
     </main>
