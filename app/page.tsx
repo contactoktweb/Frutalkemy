@@ -34,7 +34,7 @@ export default function Home() {
         <section className="bg-navy-light/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-sm p-8 md:p-16 max-w-3xl w-full text-center transform transition-all duration-700 hover:border-lime/30">
           
           <div className="flex flex-col items-center justify-center mb-8 gap-6 animate-float">
-            <img src="/icon.svg" alt="Frutalkemy Logo" className="w-24 h-24 md:w-32 md:h-32 rounded-3xl shadow-xl" />
+            <img src="/logo.png" alt="Frutalkemy Logo" className="w-24 h-24 md:w-32 md:h-32 object-contain rounded-xl shadow-xl" />
             <span className="font-display text-4xl md:text-5xl font-black tracking-tighter text-white">
               FRUTALKEMY
             </span>
